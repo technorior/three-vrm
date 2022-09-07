@@ -34,7 +34,7 @@ let currentMixer = undefined;
 
 const helperRoot = new THREE.Group();
 helperRoot.renderOrder = 10000;
-scene.add( helperRoot );
+// scene.add( helperRoot );
 
 function loadVRM( modelUrl ) {
 
@@ -114,12 +114,28 @@ function loadFBX( animationUrl ) {
 
 }
 
+function loadGLB( animationUrl ) {
+
+	currentAnimationUrl = animationUrl;
+
+	// create AnimationMixer for VRM
+	currentMixer = new THREE.AnimationMixer( currentVrm.scene );
+
+	loadGLBAnimation(animationUrl, currentVrm ).then( ( clip ) => {
+
+		// Apply the loaded animation to mixer and play
+		currentMixer.clipAction( clip ).play();
+
+	} );
+
+}
+
 // helpers
 const gridHelper = new THREE.GridHelper( 10, 10 );
 scene.add( gridHelper );
 
 const axesHelper = new THREE.AxesHelper( 5 );
-scene.add( axesHelper );
+// scene.add( axesHelper );
 
 // animate
 const clock = new THREE.Clock();
@@ -177,6 +193,10 @@ window.addEventListener( 'drop', function ( event ) {
 	if ( fileType === 'fbx' ) {
 
 		loadFBX( url );
+
+	} else if ( fileType === 'glb' ){
+
+		loadGLB( url );
 
 	} else {
 
