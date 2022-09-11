@@ -13,7 +13,7 @@ function loadGLBAnimation( url, vrm ) {
 		'../animations/animArmOnly777.glb').then(
 		(asset) => {
 			const clip = (asset).animations[0];
-			console.log(asset)
+			// console.log(asset)
 			const tracks = [];
 
 			const restRotationInverse = new THREE.Quaternion();
@@ -75,7 +75,7 @@ function loadGLBAnimation( url, vrm ) {
 
 						let nodeName = vrmNodeName;
 						let value = track.values.map( ( v, i ) => ( vrm.meta?.metaVersion === '0' && i % 3 !== 1 ? - v : v ) * 0.01 );
-						console.log(track.values)
+						// console.log(track.values)
 						tracks.push( new THREE.VectorKeyframeTrack( `${nodeName}.${propertyName}`, track.times, track.values ) );
 
 					}
